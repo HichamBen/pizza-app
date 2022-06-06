@@ -1,7 +1,7 @@
 const express = require("express");
 const pizzaRouter = express.Router();
 const RestaurantM = require("../models/restaurantM");
-const data = require("../restaurants");
+/* const data = require("../restaurants");*/
 
 pizzaRouter.get("/insert", async (req, res) => {
     // const result = await RestaurantM.insertMany(data);
@@ -20,7 +20,7 @@ pizzaRouter.get("/restaurants", async (req, res) => {
     }
 });
 
-pizzaRouter.get("/restaurants/:id", async (req, res) => {  
+pizzaRouter.get("/restaurants/:id", async (req, res) => {
     try {
         const restaurant = await RestaurantM.findById(req.params.id);
         res.status(200).json(restaurant);
