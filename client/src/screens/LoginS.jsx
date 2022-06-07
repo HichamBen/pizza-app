@@ -24,10 +24,10 @@ export default function LoginS() {
     })
 
     function loginbyGoogle() {
-        window.open("http://localhost:5000/api/user/auth/google", "_self");
+        window.open("https://pizza-my-app.herokuapp.com/api/user/auth/google", "_self");
     }
     function loginByFacebook() {
-        window.open("http://localhost:5000/api/user/auth/facebook", "_self");
+        window.open("https://pizza-my-app.herokuapp.com/api/user/auth/facebook", "_self");
     }
 
     return <div>
