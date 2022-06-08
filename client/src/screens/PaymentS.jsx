@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import BarrGuide from "../components/BarreGuide";
 import { registerOrder } from "../reduxjs/reducers/orderSlice";
 
 export default function PaymentS() {
+    const [cAmount, setCAmount] = useState();
     const firstM = useRef();
     const secondM = useRef();
 
@@ -13,6 +14,14 @@ export default function PaymentS() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        async function convertCurrency() {
+            try {
+                const { data } = await axios.get(`https://api.apilayer.com/currency_data/convert?to=USD&from=MAD&amount=${order.totalePrice}&apikey=evByCrrFufg7sC2ic4kc3s2RFbYZ8xKs`);
+                setCAmount(data.result.toFixed(2));
+            } catch (err) {
+                console.log(err.message);
+            }
+        }
         async function createScript() {
             try {
                 const { data } = await axios.get("/api/config/paypalKey");
@@ -23,7 +32,7 @@ export default function PaymentS() {
                 console.log(err.message);
             }
         }
-
+        convertCurrency();
         createScript();
         return function removeScript() {
             document.body.removeChild(document.body.lastChild)
@@ -51,7 +60,7 @@ export default function PaymentS() {
                     return actions.order.create({
                         purchase_units: [{
                             amount: {
-                                value: order.totalePrice
+                                value: Number(cAmount)
                             }
                         }]
                     });
