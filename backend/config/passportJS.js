@@ -36,7 +36,7 @@ passport.use(new LocalStrategy(customField, verifyCall));
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "https://pizza-my-app.herokuapp.com/api/user/auth/google/home",
+    callbackURL: "https://pizza-app-mern.onrender.com/api/user/auth/google/home",
     passReqToCallback: true
 },
     async function (request, accessToken, refreshToken, profile, done) {
@@ -64,7 +64,7 @@ passport.use(new GoogleStrategy({
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "https://pizza-my-app.herokuapp.com/api/user/auth/facebook/home",
+    callbackURL: "https://pizza-app-mern.onrender.com/api/user/auth/facebook/home",
 },
     async function (accessToken, refreshToken, profile, done) {
         try {
