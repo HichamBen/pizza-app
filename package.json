@@ -4,9 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "cd client && npm run build",
-    "install-dep": "cd client && npm install",
-    "start": "npm run build && npm run install-dep && node app.js"
+    "build": "npm install && cd ./client && npm install && npm run build",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
