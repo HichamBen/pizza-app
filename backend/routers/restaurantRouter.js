@@ -1,7 +1,7 @@
 const express = require("express");
 const pizzaRouter = express.Router();
 const RestaurantM = require("../models/restaurantM");
-const data = require("../restaurants");
+// const data = require("../restaurants");
 
 pizzaRouter.get("/insert", async (req, res) => {
     // const result = await RestaurantM.insertMany(data);
