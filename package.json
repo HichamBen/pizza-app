@@ -1,0 +1,29 @@
+{
+  "name": "pizza-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "build": "cd client && npm run build",
+    "install-dep": "cd client && npm install",
+    "start": "npm run build && npm run install-dep && node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "connect-mongo": "^4.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "mongoose": "^6.3.3",
+    "passport": "^0.5.3",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth2": "^0.2.0",
+    "passport-local": "^1.0.0"
+  },
+  "engines": {
+    "node": "14.18.1"
+  }
+}
