@@ -32,7 +32,7 @@ export default function LoginS() {
 
     return <div>
         <Header />
-        <form onSubmit={handleSubmit} className="container px-4 text-center mt-5">
+        <form onSubmit={handleSubmit} className="container px-4 text-center mt-5" autoComplete="off">
 
             <h2 className="mb-5">Log In to Pizza App</h2>
             <div className="mb-3">

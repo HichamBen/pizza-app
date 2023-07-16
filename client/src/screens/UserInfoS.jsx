@@ -95,7 +95,7 @@ export default function UserInfoS() {
 
     return <>
         <BarrGuide step1 step2 />
-        <form onSubmit={handleSubmit} className="container px-4 mt-5">
+        <form onSubmit={handleSubmit} className="container px-4 mt-5" autoComplete="off">
 
             <h2 className="mb-5 text-center">Add your info</h2>
 
