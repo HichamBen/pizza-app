@@ -15,7 +15,10 @@ export default function PizzaRow({ item, id }) {
   const parsed = parse(useLocation().search);
   useEffect(() => {
     setItemsPrice(amount * item.price);
-    setSearchParms({ ...parsed, ["item_" + id]: amount * item.price });
+    setSearchParms(
+      { ...parsed, ["item_" + id]: amount * item.price },
+      { replace: true }
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount, order]);
 

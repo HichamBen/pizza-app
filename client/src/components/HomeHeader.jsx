@@ -16,7 +16,7 @@ export default function HomeHeader() {
                 </ul>
             </div>
         </nav>
-        <div className="row justify-content-center align-items-center g-5 m-0 p-5">
+        <div className="row justify-content-center align-items-center g-5 m-0 px-5 py-2">
             <div className="col-12 col-sm-10 col-md-5">
                 <img src="/imgs/pizza.jpg" alt="pizza-img" className="img-fluid"></img>
             </div>

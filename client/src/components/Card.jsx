@@ -2,11 +2,11 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function Card(props) {
-  const { isAuth } = useSelector(state => state.user.userData);
+  const { token } = useSelector(state => state.user);
   const navigate = useNavigate();
 
   function handleClick() {
-    if (isAuth) {
+    if (token) {
       navigate(`/order/${props.id}`);
     } else {
       navigate("/login");
@@ -16,6 +16,7 @@ export default function Card(props) {
   return (
     <div className="card ms-4 mb-4" style={{ width: "16rem" }}>
       <img
+        loading="lazy"
         src={props.img}
         style={{ objectFit: "cover", objectPosition: "center" }}
         className="card-img-top"

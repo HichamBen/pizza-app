@@ -1,60 +1,54 @@
 require("dotenv").config();
 const express = require("express");
-const path = require("path");
 const mongoose = require("mongoose");
-const routerPizza = require("./backend/routers/restaurantRouter");
-const userRouter = require("./backend/routers/userRouter");
-const orderRouter = require("./backend/routers/orderRouter");
-const passport = require("passport");
-const MongoStore = require("connect-mongo");
-const session = require("express-session");
-
-// Connect DB
-mongoose.connect(process.env.MONGODB_URI);
+const helmet = require("helmet");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const credentials = require("./backend/middlewares/credentilas");
+const corsOptions = require("./backend/config/corsOptions");
+const verifyJWT = require("./backend/middlewares/verifyJWT");
 
 const app = express();
 
+// Handle options credentials check - before CORS!
+// and fetch cookies credentials requirement
+app.use(credentials);
+
+/* CONFIGURATION */
+app.use(cors(corsOptions));
+app.use(helmet());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-// config express-session middleware
-app.use(
-  session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI,
-      collectionName: "sessions",
-    }),
-    cookie: {
-      maxAge: 24 * 60 * 60 * 1000, // session for 1day
-    },
-  })
-);
+/** routes */
+app.use("/auth", require("./backend/routes/authRouter"));
+app.use("/register", require("./backend/routes/registerRouter"));
+app.use("/logout", require("./backend/routes/logoutRouter"));
+app.use("/refresh", require("./backend/routes/refreshTokenRouter"));
+app.use("/api/pizza", require("./backend/routes/api/restaurantRouter"));
 
-// config authentication with passport
-require("./backend/config/passportJS");
+app.use(verifyJWT);
+app.use("/api/user", require("./backend/routes/api/userRouter"));
+app.use("/api/order", require("./backend/routes/api/orderRouter"));
 
-// config passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Use Routers middleware
-app.use("/api/pizza", routerPizza);
-app.use("/api/user", userRouter);
-app.use("/api/order", orderRouter);
 app.get("/api/config/googleKey", (req, res) => {
   res.send(process.env.GOOGLE_KEY_MAP);
 });
+
 app.get("/api/config/paypalKey", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID);
 });
 
-app.use(express.static(path.join(__dirname, "/client/build")));
-app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "/client/build/index.html"))
-);
-
-app.listen(process.env.PORT, () => {
-  console.log(`The server run on http://localhost:${process.env.PORT}`);
-});
+// connect to Mongodb then open the server
+mongoose.set("strictQuery", false);
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(`The server run on ${process.env.PORT}`);
+    });
+  })
+  .catch(err => {
+    console.log("mongodb error:", err.message);
+  });

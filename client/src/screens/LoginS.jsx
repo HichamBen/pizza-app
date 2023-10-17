@@ -1,14 +1,11 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate, useSearchParams } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Header from "../components/Header";
-import { loginUser, loginWithOAuth2 } from "../reduxjs/reducers/userSlice";
+import { loginUser } from "../reduxjs/reducers/userSlice";
 
 export default function LoginS() {
-  const { error } = useSelector(state => state.user);
-  const { isAuth } = useSelector(state => state.user.userData);
+  const { error, token } = useSelector(state => state.user);
   const dispatch = useDispatch();
-  const [searchParams] = useSearchParams();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -20,25 +17,8 @@ export default function LoginS() {
     dispatch(loginUser(info));
   }
 
-  useEffect(() => {
-    searchParams.get("isAuth") === "true" && dispatch(loginWithOAuth2());
-  });
-
-  function loginbyGoogle() {
-    window.open(
-      "https://pizza-app-mern.onrender.com/api/user/auth/google",
-      "_self"
-    );
-  }
-  function loginByFacebook() {
-    window.open(
-      "https://pizza-app-mern.onrender.com/api/user/auth/facebook",
-      "_self"
-    );
-  }
-
-  return isAuth ? (
-    <Navigate to="/" />
+  return token ? (
+    <Navigate to="/" replace={true} />
   ) : (
     <div>
       <Header />
@@ -51,13 +31,13 @@ export default function LoginS() {
         <div className="mb-3">
           <span
             className="btn btn-lg btn-outline-danger me-3"
-            onClick={loginbyGoogle}
+            // onClick={}
           >
             <i className="bi bi-google"></i> Google
           </span>
           <span
             className="btn btn-lg btn-outline-primary"
-            onClick={loginByFacebook}
+            // onClick={}
           >
             <i className="bi bi-facebook"></i> Facebook
           </span>
