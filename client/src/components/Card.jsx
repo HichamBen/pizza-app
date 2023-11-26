@@ -16,7 +16,6 @@ export default function Card(props) {
   return (
     <div className="card ms-4 mb-4" style={{ width: "16rem" }}>
       <img
-        loading="lazy"
         src={props.img}
         style={{ objectFit: "cover", objectPosition: "center" }}
         className="card-img-top"

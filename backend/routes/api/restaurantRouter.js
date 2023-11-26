@@ -10,6 +10,8 @@ pizzaRouter.get("/insert", async (req, res) => {
 });
 
 pizzaRouter.get("/restaurants", async (req, res) => {
+  let age = 24 * 60 * 60 * 1000
+  res.setHeader("Cache-Control", `max-age=${age}`)
   const {
     pageSize = 6,
     page = 1,
@@ -50,6 +52,8 @@ pizzaRouter.get("/restaurants", async (req, res) => {
 });
 
 pizzaRouter.get("/restaurants/:id", async (req, res) => {
+  let age = 24 * 60 * 60 * 1000
+  res.setHeader("Cache-Control", `max-age=${age}`)
   try {
     const restaurant = await RestaurantM.findById(req.params.id);
     res.status(200).json(restaurant);
