@@ -52,3 +52,5 @@ mongoose
   .catch(err => {
     console.log("mongodb error:", err.message);
   });
+
+module.exports = app  
