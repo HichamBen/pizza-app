@@ -1,6 +1,5 @@
 import axios from "axios";
-// const BASE_URL = "https://pizza-app-mern.onrender.com";
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://pizza-app-ruby-three.vercel.app";
 
 export default axios.create({
   baseURL: BASE_URL,
